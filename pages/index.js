@@ -1,23 +1,26 @@
 import React from "react";
-import { Typography, Row, Col, Statistic } from "antd";
+import { Typography, Row, Col, Statistic, Spin } from "antd";
 import millify from "millify";
 import Link from "next/link";
 import { useGetCryptosQuery } from "../services/cryptoApi";
+import { LoadingOutlined } from "@ant-design/icons";
 
-import { Navbar } from "../components";
 import SimpleCryptocurrencies from "../components/SimpleCryptocurrencies";
+import NewsComponent from "../components/NewsComponent";
 
 const { Title } = Typography;
 
 export default function Home() {
-  const { data, isFetching } = useGetCryptosQuery();
+  const { data, isFetching } = useGetCryptosQuery(10);
 
   const globalStats = data?.data?.stats;
 
-  if (isFetching) return "Loading...";
+  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
+
+  if (isFetching) return <Spin indicator={antIcon} />;
 
   return (
-    <>
+    <div className="routes">
       <Title level={2} className="heading">
         Global Crypto Stats
       </Title>
@@ -58,7 +61,7 @@ export default function Home() {
           <Link href="/cryptocurrencies">Show More</Link>
         </Title>
       </div>
-      <SimpleCryptocurrencies />
+      <SimpleCryptocurrencies simplified />
       <div className="home-heading-container">
         <Title level={2} className="home-title">
           Latest Crypto News
@@ -67,14 +70,7 @@ export default function Home() {
           <Link href="/news">Show More</Link>
         </Title>
       </div>
-      <div className="home-heading-container">
-        <Title level={2} className="home-title">
-          Latest Crypto News
-        </Title>
-        <Title level={3} className="show-more">
-          <Link href="/cryptocurrencies">Show More</Link>
-        </Title>
-      </div>
-    </>
+      <NewsComponent simplified />
+    </div>
   );
 }
