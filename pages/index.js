@@ -3,10 +3,10 @@ import { Typography, Row, Col, Statistic, Spin } from "antd";
 import millify from "millify";
 import Link from "next/link";
 import { useGetCryptosQuery } from "../services/cryptoApi";
-import { LoadingOutlined } from "@ant-design/icons";
 
 import SimpleCryptocurrencies from "../components/SimpleCryptocurrencies";
 import NewsComponent from "../components/NewsComponent";
+import Loader from "../components/Loader";
 
 const { Title } = Typography;
 
@@ -15,9 +15,7 @@ export default function Home() {
 
   const globalStats = data?.data?.stats;
 
-  const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-  if (isFetching) return <Spin indicator={antIcon} />;
+  if (isFetching) return <Loader />;
 
   return (
     <div className="routes">

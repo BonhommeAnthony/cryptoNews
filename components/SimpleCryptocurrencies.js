@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Card, Row, Col, Input } from "antd";
 
 import { useGetCryptosQuery } from "../services/cryptoApi";
+import Loader from "./Loader";
 
 const SimpleCryptocurrencies = ({ simplified }) => {
   const count = simplified ? 10 : 100;
@@ -21,7 +22,7 @@ const SimpleCryptocurrencies = ({ simplified }) => {
     setCryptos(filteredData);
   }, [cryptosList, searchTerm]);
 
-  if (isFetching) return "loading ...";
+  if (isFetching) return <Loader />;
 
   return (
     <>
